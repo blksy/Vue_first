@@ -3,7 +3,8 @@ const app = Vue.createApp({
         return{
           playerHealth: 100,
           monsterHealth: 100,
-          noOfRounds: 0
+          noOfRounds: 0,
+          winner:null
         };
     },
     methods:{
@@ -35,6 +36,26 @@ const app = Vue.createApp({
         this.attackPlayer();
         }
 
+    },
+    watch:{
+        playerHealth(value){
+            if(value <=0 && this.monsterHealth <=0){
+                //Draw
+                this.winner = 'draw';
+            }else if (value <= 0){
+                //Game Over
+                this.winner = 'loose';
+            }
+        },
+        monsterHealth(value){
+            if(value <= 0 && this.playerHealth <=0){
+                //Draw
+                this.winner = 'draw';
+            }else if (value <=0){
+                //Victory
+                this.winner = 'win';
+            }
+        }
     },
     computed:{
       monsterBarStyle(){

@@ -29,6 +29,12 @@
           <div class="healthbar__value" v-bind:style="playerBarStyle"></div>
         </div>
       </section>
+      <section class="container" v-if="winner">
+         <h2>Game Over</h2>
+         <h3 v-if="winner === 'win'">You Won</h3>
+         <h3 v-else-if="winner === 'loose'">You Lost</h3>
+         <h3 v-else-if="winner === 'draw'">It's a Draw!</h3>
+      </section> 
       <section id="controls">
         <button v-on:click="attackMonster">ATTACK</button>
         <button 
