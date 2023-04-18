@@ -15,7 +15,7 @@ const app = Vue.createApp({
          this.attackPlayer(); 
         },
         attackPlayer(){
-         const attackPower = Math.floor(Math.random() * (19 - 8) + 8); 
+         const attackPower = Math.floor(Math.random() * (20 - 10) + 10); 
          this.playerHealth -= attackPower; 
         },
         heavyAttackMonster(){
@@ -24,6 +24,16 @@ const app = Vue.createApp({
         this.monsterHealth -= attackPower;
         this.attackPlayer();
         },
+        heal(){
+        this.noOfRounds++;
+        const healPlayer = Math.floor(Math.random() * (20 - 8) + 8);
+        if(this.playerHealth + healPlayer > 100){
+            this.playerHealth = 100;
+        }else{
+            this.playerHealth += healPlayer;
+        }
+        this.attackPlayer();
+        }
 
     },
     computed:{
@@ -32,6 +42,9 @@ const app = Vue.createApp({
       },
       playerBarStyle(){
         return {width: this.playerHealth + '%'}
+      },
+      canUseHeavyAttack(){
+        return this.noOfRounds % 3 !== 0;
       }
     },
 })

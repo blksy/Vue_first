@@ -32,10 +32,10 @@
       <section id="controls">
         <button v-on:click="attackMonster">ATTACK</button>
         <button 
-           v-bind:disabled="noOfRounds % 3 !== 0" 
+           v-bind:disabled="canUseHeavyAttack" 
            @click="heavyAttackMonster"
         >SPECIAL ATTACK</button>
-        <button>HEAL</button>
+        <button v-on:click="heal">HEAL</button>
         <button>SURRENDER</button>
       </section>
       <section id="log" class="container">
