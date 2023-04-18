@@ -4,7 +4,8 @@ const app = Vue.createApp({
           playerHealth: 100,
           monsterHealth: 100,
           noOfRounds: 0,
-          winner:null
+          winner:null,
+          logMessages: []
         };
     },
     methods:{
@@ -13,16 +14,19 @@ const app = Vue.createApp({
             //random dmg between 5 and 15 points
          const attackPower = Math.floor(Math.random() * (15 - 5) + 5);
          this.monsterHealth -= attackPower;
+         this.addLogMessage('player', 'attack', attackPower);
          this.attackPlayer(); 
         },
         attackPlayer(){
          const attackPower = Math.floor(Math.random() * (20 - 10) + 10); 
          this.playerHealth -= attackPower; 
+         this.addLogMessage('monster', 'attack', attackPower);
         },
         heavyAttackMonster(){
         this.noOfRounds++;
         const attackPower = Math.floor(Math.random() * (25 - 10) + 10); 
         this.monsterHealth -= attackPower;
+        this.addLogMessage('player', 'attack', attackPower);
         this.attackPlayer();
         },
         heal(){
@@ -33,6 +37,7 @@ const app = Vue.createApp({
         }else{
             this.playerHealth += healPlayer;
         }
+        this.addLogMessage('player', 'heal', healPlayer);
         this.attackPlayer();
         },
         gameReset(){
@@ -40,10 +45,18 @@ const app = Vue.createApp({
           this.monsterHealth = 100;
           this.winner = null;
           this.noOfRounds = 0;
+          this.battleMessages = []
         },
         surrender(){
             this.winner = 'loose';
-        }
+        },
+        addLogMessage(who, what, value) {
+            this.logMessages.unshift({
+              actionBy: who,
+              actionType: what,
+              actionValue: value
+            });
+        },
     },
     watch:{
         playerHealth(value){
